@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Fullscreen Video</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: black;
+    }
+
+    video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+
+    video::-webkit-media-controls-enclosure {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <video id="video" src="video.mp4" autoplay muted loop playsinline></video>
+
+  <script>
+    const video = document.getElementById("video");
+
+    // Try to enter fullscreen automatically
+    window.addEventListener("load", () => {
+      video.play();
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) docEl.requestFullscreen();
+      else if (docEl.webkitRequestFullscreen) docEl.webkitRequestFullscreen();
+      else if (docEl.mozRequestFullScreen) docEl.mozRequestFullScreen();
+      else if (docEl.msRequestFullscreen) docEl.msRequestFullscreen();
+    });
+
+    // Allow fullscreen on click if blocked
+    video.addEventListener("click", () => {
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) docEl.requestFullscreen();
+    });
+  </script>
+</body>
+</html>
